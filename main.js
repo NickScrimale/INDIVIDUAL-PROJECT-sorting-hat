@@ -44,12 +44,26 @@ const studentList = [
 ]
 
 const darkArmy = [
-    {
-      name: studentList.name
-    }
+    
 ]
 
+const houses = ["Gryffindor", "HufflePuff", "Ravenclaw", "Slytherin"]
 
+const sortingHat = () => {
+  let domString = `<form>
+    <div class="mb-3">
+      <label for="studentInput" class="form-label">Student: </label>
+      <input type="name" class="form-control" id="exampleInputEmail1" aria-describedby="studentHelp">
+      <div id="sortinHelp" class="form-text">Enter first year's name.</div>
+    </div>
+    <div class="mb-3">
+      <label for="imageUrl" class="form-label">Student Picture</label>
+      <input type="imageUrl" class="form-control" id="imageUrl">
+    </div>
+    <button type="submit" class="btn btn-primary">Sort!</button>
+  </form>`;
+  renderToDom('#createBtnContainer', domString)
+}
 
 const filterButtons = () => {
   const domString= `
@@ -78,30 +92,31 @@ const cardsOnDom = (studentList) => {
             <a href="#" class="btn btn-primary" id="delete--${student.id}">Expel</a>
           </div>
         </div>
+        
       
       `
     }
     renderToDom('#magicUsers', domString);
 }
 
-const cardsOnDom2 = (darkArmy) => {
-  for (const soldier of darkArmy) {
-    let domString = `<div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Dark Army</h5>
-        <p class="card-text">Unfortunately, ${soldier.name} has joined the dark army.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>`
-    renderToDom('#darkMagic', domString)
-  }
+// const cardsOnDom2 = (studentList) => {
+//   let domString = `<div class="card" style="width: 18rem;">
+//     <img src="..." class="card-img-top" alt="...">
+//     <div class="card-body">
+//       <h5 class="card-title">Dark Army</h5>
+//         <p class="card-text">Unfortunately, ${student.name} has joined the dark army.</p>
+//         <a href="#" class="btn btn-primary">Go somewhere</a>
+//       </div>
+//     </div>`
+    
+  
 
+//   renderToDom('#darkMagic', domString)
   
-  
-}
+// }
 
 const eventListeners = () => {
+  
   document.querySelector('#filterContainer').addEventListener('click', (e) => {
     if (e.target.id === "all") {
       cardsOnDom(studentList);
@@ -113,19 +128,39 @@ const eventListeners = () => {
   });
 
 
-  document.querySelector('#darkMagic', '#magicUsers').addEventListener('click', (e) => {
-    if (e.target.id) {
+  document.querySelector('#magicUsers').addEventListener('click', (e) => {
+    
       
       const [method, student] = e.target.id.split('--')
+      console.log(student)
 
-      const index = studentList.findIndex(student => student.id === id)
+      const index = studentList.findIndex(s => s.id === parseInt(student))
 
       if (e.target.id.includes('delete')) {
         console.log("Delete Button Pressed")
-        studentList.splice(index, 1);
+        darkArmy.push(...studentList.splice(index, 1));
         cardsOnDom(studentList)
+        console.log(darkArmy, studentList)
       }
+    
+  })
+
+  const form = document.querySelector('form')
+  form.addEventListener('submit', (e) => {
+    const randomHouse = houses[Math.floor(Math.random()*houses.length)];
+    e.preventDefault();
+
+    const newStudent = {
+      name: document.querySelector("#studentName"),
+      imageUrl: document.querySelector("#imageUrl"),
+      
     }
+    studentList.push(newStudent)
+
+    cardsOnDom(studentList)
+    randomHouse();
+
+    form.reset();
   })
 }
 
@@ -135,9 +170,10 @@ const eventListeners = () => {
 
 
 const startApp = () => {
+  sortingHat()
   filterButtons()
-  cardsOnDom(studentList)
-  cardsOnDom2(darkArmy)
+  cardsOnDom(studentList, darkArmy)
+  // cardsOnDom2()
   eventListeners()
 }
 
