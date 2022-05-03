@@ -75,7 +75,7 @@ const cardsOnDom = (studentList) => {
           <div class="card-body">
             <h5 class="card-title">${student.name}</h5>
             <p class="card-text">${student.house}</p>
-            <a href="#" class="btn btn-primary" id="switch--${student.id}">Expel</a>
+            <a href="#" class="btn btn-primary" id="delete--${student.id}">Expel</a>
           </div>
         </div>
       
@@ -115,43 +115,17 @@ const eventListeners = () => {
 
   document.querySelector('#darkMagic', '#magicUsers').addEventListener('click', (e) => {
     if (e.target.id) {
-      const index = (studentList.findIndex, darkArmy.findIndex)
+      
       const [method, student] = e.target.id.split('--')
 
-      const btnSwitch = document.getElementById('switch');
-      btnSwitch.onclick = SwitchClicked;
+      const index = studentList.findIndex(student => student.id === id)
 
-      function SwitchClicked(){
-    //Remove user from aBlocked
-        const expelledSudent = expelledById(studentList, student.id);
-
-    //Add the removed user to arrayAdmins
-        if(expelledSudent != null){
-          darkArmy.push(expelledSudent);
-        }
-    }
-
-//Will remove the first user found with this email and returns it
-    function expelledById(arrayOfStudents, id){
-        for(const i=0; i<arrayOfStudents.length; i++){
-            if(arrayOfStudents[i].id === id){
-                const removedStudent = arrayOfStudents.splice(i, 1);
-                if(removedStudent.length > 0) return removedStudent[0];            
-            }
-        }
+      if (e.target.id.includes('delete')) {
+        console.log("Delete Button Pressed")
+        studentList.splice(index, 1);
         cardsOnDom(studentList)
-        cardsOnDom2(darkArmy)
-
-    return null;
+      }
     }
-
-
-
-    }
-    
-    
-    
-    
   })
 }
 
