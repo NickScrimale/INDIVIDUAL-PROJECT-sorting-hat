@@ -115,8 +115,8 @@ const eventListeners = () => {
 
   document.querySelector('#darkMagic', '#magicUsers').addEventListener('click', (e) => {
     if (e.target.id) {
-      // const index = (studentList.findIndex, darkArmy.findIndex)
-      // const [method, student] = e.target.id.split('--')
+      const index = (studentList.findIndex, darkArmy.findIndex)
+      const [method, student] = e.target.id.split('--')
 
       const btnSwitch = document.getElementById('switch');
       btnSwitch.onclick = SwitchClicked;
@@ -139,6 +139,8 @@ const eventListeners = () => {
                 if(removedStudent.length > 0) return removedStudent[0];            
             }
         }
+        cardsOnDom(studentList)
+        cardsOnDom2(darkArmy)
 
     return null;
     }
