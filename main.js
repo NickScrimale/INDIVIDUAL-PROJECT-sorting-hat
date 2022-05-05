@@ -172,7 +172,8 @@ const eventListeners = () => {
       if (e.target.id.includes('delete')) {
         console.log("Delete Button Pressed")
         darkArmy.push(...studentList.splice(index, 1));
-        student.expelled = student.expelled ? false : true
+        const expelToggle = (expelled) => (expelled = !expelled)
+        // student.expelled = student.expelled ? false : true
         // student.expelled === !student.expelled
         // function stringToBoolean (string){
         //   switch(string.toLowerCase().trim()){
@@ -182,6 +183,7 @@ const eventListeners = () => {
         //   }
         // }
         cardsOnDom(studentList)
+        expelToggle(false)
         // stringToBoolean()
         console.log(darkArmy, studentList)
       }
