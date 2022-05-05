@@ -17,7 +17,7 @@ const studentList = [
         name: "Radahn",
         house: "Slytherin",
         imageUrl: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/645fd3c5-6089-4f57-b77d-9b73809492a9/dexw8j8-78180856-e1a2-4c58-a8e6-75380aa62956.png/v1/fill/w_1920,h_2304,q_80,strp/general_radahn_by_sirjimb_dexw8j8-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjMwNCIsInBhdGgiOiJcL2ZcLzY0NWZkM2M1LTYwODktNGY1Ny1iNzdkLTliNzM4MDk0OTJhOVwvZGV4dzhqOC03ODE4MDg1Ni1lMWEyLTRjNTgtYThlNi03NTM4MGFhNjI5NTYucG5nIiwid2lkdGgiOiI8PTE5MjAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.thj-azy-A0zUlh_qLjzs93oqZ5uuO7KKNhgnInxDUS4",
-        expelled: true
+        expelled: false
     },
     {
         id: 3,
@@ -38,7 +38,7 @@ const studentList = [
         name: "Seluvis",
         house: "Slytherin",
         imageUrl: "https://www.gamerguides.com/assets/guides/resize1100x-/234/Seluvis_Elden_Ring.jpg",
-        expelled: true
+        expelled: false
     },
     {
         id: 6,
@@ -53,22 +53,22 @@ const darkArmy = [
     
 ]
 
-// const welcomeCard = () =>{
-//   let domString = " " 
-//    domString += `<div class="sort-card">
-//   <div class="card-header">
-//     Hello and welcome to hogwarts! 
-//   </div>
-//   <div class="card-body">
-//     <h5 class="card-title">Please select the sort button to begin</h5>
-//     <p class="card-text">Today is only the beginning! </p>
-//    <a  id= "sort" onclick="sort()" href="#" class="btn btn-primary">Start</a>
-//   </div>
-//   </div>`
+const welcomeCard = () =>{
+  let domString = " " 
+   domString += `<div class="sort-card">
+  <div class="card-header">
+    Hello and welcome to hogwarts! 
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Please select the sort button to begin</h5>
+    <p class="card-text">Today is only the beginning! </p>
+   <a  id= "sort" href="#" class="btn btn-primary">Start</a>
+  </div>
+  </div>`
   
-//   renderToDom('#introContainer',domString)
+  renderToDom('#introContainer',domString)
   
-// }
+}
 
 const hide = () => {
   document.getElementById('formContainer').style.display ="none"
@@ -80,16 +80,16 @@ const sort = () => {
 
 const sortingHat = () => {
   let domString = `<form>
-    <div class="mb-3">
-      <label for="studentInput" class="form-label">Student: </label>
-      <input type="text" id="student-name" class="form-control" placeholder="Enter Your Name" required />
-    </div>
-    <div class="mb-3">
-      <label for="imageUrl" class="form-label">Student Picture</label>
-      <input type="imageUrl" class="form-control" id="imageUrl">
-    </div>
-    <button type="submit" class="btn btn-primary" value="submit">Sort!</button>
-  </form>`;
+  <div class="mb-3">
+  <label for="studentInput" class="form-label">Student: </label>
+  <input type="text" id="student-name" class="form-control" placeholder="Enter Your Name" required />
+</div>
+<div class="mb-3">
+  <label for="imageUrl" class="form-label">Student Picture</label>
+  <input type="imageUrl" class="form-control" id="imageUrl">
+</div>
+<button type="submit" class="btn btn-primary" value="submit">Sort!</button>
+</form>`;
   renderToDom('#createBtnContainer', domString)
 }
 
@@ -131,7 +131,7 @@ const cardsOnDom = (studentList) => {
 const cardsOnDom2 = (studentList) => {
   let domString = " "
   for(let was of studentList){
-    if(was.expelled === true){
+    if(was.expelled === false){
       domString += `<div class="card" style="width: 18rem;">
         <img src="${was.imageUrl}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -147,6 +147,17 @@ const cardsOnDom2 = (studentList) => {
   renderToDom('#darkMagic', domString)
   
 }
+
+const letsGo = () => {
+  document.querySelector("#introContainer").addEventListener("click", (e) => {
+    if (e.target.id === "lets-go") {
+      document.querySelector("#lets-go").style.display = "none";
+      sortingHat();
+      filterButtons();
+      
+    }
+  });
+};
 
 const eventListeners = () => {
   
@@ -164,28 +175,32 @@ const eventListeners = () => {
   document.querySelector('#magicUsers').addEventListener('click', (e) => {
     
       
-      const [method, student] = e.target.id.split('--')
-      console.log(student)
+      const [method, id] = e.target.id.split('--')
+      console.log(id)
 
-      const index = studentList.findIndex(s => s.id === parseInt(student))
+      const index = studentList.findIndex(s => s.id === parseInt(id))
 
       if (e.target.id.includes('delete')) {
         console.log("Delete Button Pressed")
         darkArmy.push(...studentList.splice(index, 1));
-        const expelToggle = (expelled) => (expelled = !expelled)
+        // const expelToggle = (expelled) => (expelled = !expelled)
         // student.expelled = student.expelled ? false : true
-        // student.expelled === !student.expelled
-        // function stringToBoolean (string){
-        //   switch(string.toLowerCase().trim()){
+        
+          // student.expelled = !student.expelled
+        
+        // function stringToBoolean (expelled){
+        //   switch(expelled.toLowerCase().trim()){
         //       case "true": case "yes": case "1": return true;
         //       case "false": case "no": case "0": case null: return false;
-        //       default: return Boolean(string);
+        //       default: return Boolean(expelled);
         //   }
         // }
         cardsOnDom(studentList)
-        expelToggle(false)
+        cardsOnDom2(darkArmy)
+        // expelToggle(false)
         // stringToBoolean()
-        console.log(darkArmy, studentList)
+        console.log(studentList)
+        console.log(darkArmy)
       }
     
   })
@@ -199,15 +214,18 @@ const eventListeners = () => {
      let sortHouse= houseNames [Math.floor(Math.random()* houseNames.length)]
     const newStudent = {
       id:Math.floor(Math.random() * 10)+5,
-      name: document.querySelector("#studentInput").value,
+      name: document.querySelector("#student-name").value,
       house: sortHouse,
-      imageUrl: document.querySelector("#imageUrl").value
+      imageUrl: document.querySelector("#imageUrl").value,
+      expelled: false
     }
     console.log(newStudent)
     studentList.push(newStudent);
     cardsOnDom(studentList)
     form.reset();
   })
+
+  
 
   
 
@@ -221,11 +239,12 @@ const eventListeners = () => {
 
 
 const startApp = () => {
-  // welcomeCard()
+  welcomeCard()
+  letsGo()
   sortingHat()
   filterButtons()
   cardsOnDom(studentList)
-  cardsOnDom2(studentList)
+  cardsOnDom2(darkArmy)
   eventListeners()
 }
 
