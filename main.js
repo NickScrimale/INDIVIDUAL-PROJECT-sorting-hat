@@ -150,8 +150,8 @@ const cardsOnDom2 = (studentList) => {
 
 const letsGo = () => {
   document.querySelector("#introContainer").addEventListener("click", (e) => {
-    if (e.target.id === "lets-go") {
-      document.querySelector("#lets-go").style.display = "none";
+    if (e.target.id === "sort") {
+      document.querySelector("#sort").style.display = "none";
       sortingHat();
       filterButtons();
       

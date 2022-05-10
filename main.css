@@ -1,0 +1,13 @@
+#magicUsers {
+    display: flex;
+    flex: auto;
+    flex-wrap: wrap;
+    float: left;
+}
+
+#darkMagic {
+    display: flex;
+    flex: auto;
+    flex-wrap: wrap;
+    float: right;
+}
